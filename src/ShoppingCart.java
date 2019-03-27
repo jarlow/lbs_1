@@ -38,14 +38,19 @@ public class ShoppingCart {
         String product = keyboard.nextLine();
         int price = Store.getProductPrice(product);
         int funds = getUserBalance();
-        if (price <= funds){
+        if (price <= funds){    // Both instances of the program can enter here, if they interleave in such a way that one does not update the wallet before the other is in this check.
             try {
-                w.setBalance(funds-price);
+                Thread.sleep(1000); // give both instaces of the program enough time to enter this section to demonstrate the data race
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                w.setBalance(funds-price);  // finally update the wallet
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try {
-                p.addProduct(product);
+                p.addProduct(product);      // the car is now in the pocket twice.
             } catch (Exception e) {
                 e.printStackTrace();
             }

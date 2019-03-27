@@ -38,6 +38,10 @@ public class Wallet {
 	this.file.writeBytes(str); 
     }
 
+    public void safeWithdraw(int valueToWithdraw) throws Exception {
+
+    }
+
     /**
      * Closes the RandomAccessFile in this.file
      */
